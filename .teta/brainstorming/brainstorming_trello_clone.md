@@ -1,9 +1,12 @@
-# KanbanFlow - Technical Implementation Plan
+# KanbanFlow - Technical Implementation Plan & File Content
 
-## 1. Project Scaffolding (Manual Strategy)
-Since the directory is not empty and CLI tools can be interactive/flaky, we will manually create the core files.
+**INSTRUCTIONS FOR AGENTS:**
+This document contains the EXACT content for the configuration files needed to bootstrap the project.
+When asked to "write configs", READ this file and create the files at the specified paths.
 
-### 1.1 `package.json`
+## 1. Root Configuration Files
+
+### 1.1 `/home/user/code/package.json`
 ```json
 {
   "name": "kanban-flow",
@@ -44,7 +47,7 @@ Since the directory is not empty and CLI tools can be interactive/flaky, we will
 }
 ```
 
-### 1.2 `svelte.config.js`
+### 1.2 `/home/user/code/svelte.config.js`
 ```javascript
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
@@ -60,7 +63,7 @@ const config = {
 export default config;
 ```
 
-### 1.3 `vite.config.ts`
+### 1.3 `/home/user/code/vite.config.ts`
 ```typescript
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
@@ -70,7 +73,7 @@ export default defineConfig({
 });
 ```
 
-### 1.4 `tsconfig.json`
+### 1.4 `/home/user/code/tsconfig.json`
 ```json
 {
 	"extends": "./.svelte-kit/tsconfig.json",
@@ -87,7 +90,7 @@ export default defineConfig({
 }
 ```
 
-### 1.5 `drizzle.config.ts`
+### 1.5 `/home/user/code/drizzle.config.ts`
 ```typescript
 import type { Config } from 'drizzle-kit';
 
@@ -101,7 +104,85 @@ export default {
 } satisfies Config;
 ```
 
-## 2. Database Schema (`src/lib/server/db/schema.ts`)
+### 1.6 `/home/user/code/tailwind.config.js`
+```javascript
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./src/**/*.{html,js,svelte,ts}'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+### 1.7 `/home/user/code/postcss.config.js`
+```javascript
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+```
+
+## 2. Directory Structure & Basic Files
+
+### 2.1 `/home/user/code/src/app.html`
+```html
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>
+```
+
+### 2.2 `/home/user/code/src/app.css`
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-color: #f3f4f6;
+}
+```
+
+### 2.3 `/home/user/code/src/routes/+layout.svelte`
+```svelte
+<script>
+  import "../app.css";
+</script>
+
+<slot />
+```
+
+### 2.4 `/home/user/code/src/routes/+page.svelte` (Landing)
+```svelte
+<script>
+    import { enhance } from '$app/forms';
+</script>
+
+<div class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-600 to-blue-500 text-white">
+    <h1 class="text-6xl font-bold mb-4">KanbanFlow</h1>
+    <p class="text-xl mb-8">Manage your projects with ease.</p>
+    <div class="space-x-4">
+        <a href="/login" class="px-6 py-3 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition">Login</a>
+        <a href="/register" class="px-6 py-3 border-2 border-white rounded-lg font-semibold hover:bg-white/10 transition">Register</a>
+    </div>
+</div>
+```
+
+## 3. Backend & Database
+
+### 3.1 `/home/user/code/src/lib/server/db/schema.ts`
 ```typescript
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
@@ -142,8 +223,53 @@ export const cards = sqliteTable('cards', {
 });
 ```
 
-## 3. Workflow Steps Detail
-1.  **Manual Scaffolding**: Write the config files above. Create `src/routes/+page.svelte` (Landing) and `src/app.html`.
-2.  **Dependencies**: Run `bun install`.
-3.  **Tailwind Init**: Create `postcss.config.js` and `tailwind.config.js` manually.
-4.  **DB Init**: Run `bun run db:push` (after schema creation).
+### 3.2 `/home/user/code/src/lib/server/db/index.ts`
+```typescript
+import { drizzle } from 'drizzle-orm/better-sqlite3';
+import Database from 'better-sqlite3';
+import * as schema from './schema';
+
+const client = new Database('sqlite.db');
+export const db = drizzle(client, { schema });
+```
+
+### 3.3 `/home/user/code/src/lib/server/auth.ts`
+```typescript
+import { db } from './db';
+import { users, sessions } from './db/schema';
+import { eq } from 'drizzle-orm';
+import { v4 as uuidv4 } from 'uuid';
+import crypto from 'crypto';
+
+export async function createSession(userId: string) {
+    const sessionId = uuidv4();
+    const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7 days
+    await db.insert(sessions).values({
+        id: sessionId,
+        userId,
+        expiresAt
+    });
+    return sessionId;
+}
+
+export async function getSession(sessionId: string) {
+    const session = await db.query.sessions.findFirst({
+        where: eq(sessions.id, sessionId),
+        with: {
+            user: true
+        }
+    });
+    
+    if (!session) return null;
+    if (session.expiresAt < new Date()) {
+        await db.delete(sessions).where(eq(sessions.id, sessionId));
+        return null;
+    }
+    
+    return session;
+}
+
+export function hashPassword(password: string) {
+    return crypto.createHash('sha256').update(password).digest('hex');
+}
+```
