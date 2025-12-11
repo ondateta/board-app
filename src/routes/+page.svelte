@@ -2,10 +2,16 @@
 	let { data } = $props();
 </script>
 
+<svelte:head>
+	<title>Trellone - Organize anything, together.</title>
+	<meta name="description" content="Free Kanban boards to manage your projects and tasks. Simple, fast, and effective." />
+	<meta name="keywords" content="kanban, trello clone, project management, task organizer, productivity, sveltekit" />
+</svelte:head>
+
 <div class="flex min-h-screen flex-col bg-gray-50">
 	<header class="bg-white shadow">
 		<div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
-			<h1 class="text-3xl font-bold tracking-tight text-gray-900">Trello Clone</h1>
+			<h1 class="text-3xl font-bold tracking-tight text-gray-900">Trellone</h1>
 			<div>
 				{#if data.user}
 					<span class="mr-4 text-gray-700">Hello, {data.user.name}</span>
