@@ -6,13 +6,16 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (!sessionId) {
 		event.locals.user = null;
 		event.locals.session = null;
-    if (event.url.pathname.startsWith('/app')) {
-       throw redirect(302, '/login');
-    }
+		// Protect /app routes - Redirect unauthenticated users to login
+		if (event.url.pathname.startsWith('/app')) {
+			throw redirect(302, '/login');
+		}
 		return resolve(event);
 	}
 
 	const { session, user } = await lucia.validateSession(sessionId);
+	
+	// Handle session cookie updates
 	if (session && session.fresh) {
 		const sessionCookie = lucia.createSessionCookie(session.id);
 		event.cookies.set(sessionCookie.name, sessionCookie.value, {
@@ -27,12 +30,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 			...sessionCookie.attributes
 		});
 	}
+	
 	event.locals.user = user;
 	event.locals.session = session;
 
-  if (event.url.pathname.startsWith('/app') && !user) {
-      throw redirect(302, '/login');
-  }
+	// Protect /app routes - Double check for valid user
+	if (event.url.pathname.startsWith('/app') && !user) {
+		throw redirect(302, '/login');
+	}
 
 	return resolve(event);
 };
