@@ -22,8 +22,10 @@ A full-stack Kanban application built with **SvelteKit**, **Bun**, and **SQLite*
     -   Set up database schema with Drizzle and Lucia.
     -   Installed `better-sqlite3` as dev dependency for `drizzle-kit` compatibility.
     -   Successfully synchronized database using `bun run db:push`.
+    -   Implemented Authentication with Lucia (Register, Login, Hooks).
+    -   Created Auth Routes: `/register` and `/login`.
 
 ## Status
 -   **Phase 1 (Foundation):** Completed
--   **Phase 2 (Database):** In Progress
--   **Phase 3 (Frontend):** Pending
+-   **Phase 2 (Database):** Completed
+-   **Phase 3 (Frontend):** In Progress
