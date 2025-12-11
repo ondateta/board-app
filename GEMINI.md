@@ -1,25 +1,25 @@
-# KanbanFlow (Trello Clone)
+# KanbanFlow - Project Documentation
 
-## Project Status
-**Current Phase:** Manual Recovery (Phase 1.3.0)
-**Status:** Recovering from initial setup failure.
-**Date:** 2025-12-11
+## Project Overview
+KanbanFlow is a Trello-like project management application built with performance and simplicity in mind.
 
 ## Tech Stack
-- **Framework:** SvelteKit (Svelte 5)
 - **Runtime:** Bun
+- **Framework:** SvelteKit
+- **Language:** TypeScript
 - **Styling:** Tailwind CSS
-- **Database:** SQLite (via Drizzle ORM)
+- **Database:** SQLite (via Better-SQLite3)
+- **ORM:** Drizzle ORM
 - **Drag & Drop:** svelte-dnd-action
 
 ## Workflow History
-- **v1.0.0:** Initial Setup (Failed - automated tools issue)
-- **v1.1.0:** Recovery V1 (Failed - file creation issue)
-- **v1.2.0:** Recovery V2 (Failed - agents unable to execute complex steps)
-- **v1.3.0 (Current):** Atomic Recovery. Steps are broken down into single file writes.
+- **v1.0.0:** Initial Setup (Failed due to interactive commands)
+- **v1.1.0:** Manual Recovery (Failed due to missing config context)
+- **v1.2.0:** Robust Recovery (Failed due to agent errors)
+- **v1.3.0:** Atomic Recovery (Failed due to configuration error - missing agent assignment)
+- **v1.4.0:** Explicit Agent Workflow (Current). Defines specific agents (`scaffolder`, `coder`) for each step to ensure accountability and correct tool usage.
 
-## Next Steps
-1. Execute Atomic Recovery Workflow.
-2. Verify file existence.
-3. Install dependencies.
-4. Launch Dev Server.
+## Current Status
+- [ ] Phase 1: Foundation Setup (Config, Structure, Install)
+- [ ] Phase 2: Backend & Database (Schema, Auth)
+- [ ] Phase 3: Frontend Implementation (Auth UI, Board UI)
