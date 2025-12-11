@@ -19,7 +19,11 @@
     - `/auth/logout`: User logout
     - `/boards`, `/lists`, `/cards`: CRUD operations
 - **Frontend Routes**:
+    - `/`: Landing Page (Login/Register links)
+    - `/login`: User Login
+    - `/register`: User Registration
     - `/app`: Dashboard (Layout + Page) - Protected
+    - `/app/board/[id]`: Board View (Draggable Lists & Cards)
 - **Hooks**: `src/hooks.server.ts` handles session validation and populates `locals.user`.
 
 ## Database Schema
@@ -35,3 +39,7 @@
 - Implemented Authentication (Register, Login, Logout) and Session Management.
 - Implemented CRUD API for Boards, Lists, and Cards.
 - Implemented `/app` Dashboard (View Boards, Create Board) and Layout (Sidebar, Logout).
+- Added `seo.md` guidelines (applied to `src/app.html`).
+- Created Landing Page (`/`), Login (`/login`), and Register (`/register`) pages.
+- Created Custom 404 Error Page (`src/routes/+error.svelte`).
+- Updated `router.json`.

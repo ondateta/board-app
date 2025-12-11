@@ -110,7 +110,7 @@
     </div>
 
     <div class="flex-1 overflow-x-auto p-4">
-        <div class="flex h-full gap-4 items-start" use:dndzone={{items: lists, flipDurationMs, type: 'list', dropTargetStyle: {}}} on:consider={handleListDndConsider} on:finalize={handleListDndFinalize}>
+        <div class="flex h-full gap-4 items-start" use:dndzone={{items: lists, flipDurationMs, type: 'list', dropTargetStyle: {}}} onconsider={handleListDndConsider} onfinalize={handleListDndFinalize}>
             {#each lists as list (list.id)}
                 <div class="flex-shrink-0 w-72 bg-gray-100 rounded-lg flex flex-col max-h-full shadow-sm border border-gray-200" animate:flip={{duration: flipDurationMs}}>
                     <div class="p-3 font-semibold text-gray-700 flex justify-between items-center cursor-grab active:cursor-grabbing">
@@ -118,7 +118,7 @@
                         <button class="text-gray-400 hover:text-gray-600"><MoreHorizontal size={16} /></button>
                     </div>
                     
-                    <div class="flex-1 overflow-y-auto min-h-[50px] px-2 pb-2" use:dndzone={{items: list.cards, flipDurationMs, type: 'card', dropTargetStyle: {}}} on:consider={(e) => handleCardDndConsider(e, list.id)} on:finalize={(e) => handleCardDndFinalize(e, list.id)}>
+                    <div class="flex-1 overflow-y-auto min-h-[50px] px-2 pb-2" use:dndzone={{items: list.cards, flipDurationMs, type: 'card', dropTargetStyle: {}}} onconsider={(e) => handleCardDndConsider(e, list.id)} onfinalize={(e) => handleCardDndFinalize(e, list.id)}>
                         {#each list.cards as card (card.id)}
                             <div class="bg-white p-3 rounded mb-2 shadow-sm border border-gray-200 cursor-grab active:cursor-grabbing hover:bg-gray-50" animate:flip={{duration: flipDurationMs}}>
                                 {card.title}

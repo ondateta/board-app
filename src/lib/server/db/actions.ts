@@ -1,6 +1,7 @@
 import db from './index';
 import { randomUUID, scrypt, randomBytes, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
+import type { User, Board, List, Card } from '$lib/types';
 
 const scryptAsync = promisify(scrypt);
 
@@ -17,16 +18,16 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
     return timingSafeEqual(keyBuffer, derivedKey);
 }
 
-export function createUser(username: string, passwordHash: string) {
+export function createUser(username: string, passwordHash: string): User {
     const id = randomUUID();
     const stmt = db.prepare('INSERT INTO users (id, username, password_hash) VALUES (?, ?, ?)');
     stmt.run(id, username, passwordHash);
-    return { id, username };
+    return { id, username, created_at: Math.floor(Date.now() / 1000) };
 }
 
-export function getUserByUsername(username: string) {
+export function getUserByUsername(username: string): (User & { password_hash: string }) | undefined {
     const stmt = db.prepare('SELECT * FROM users WHERE username = ?');
-    return stmt.get(username) as { id: string; username: string; password_hash: string; created_at: number } | undefined;
+    return stmt.get(username) as (User & { password_hash: string }) | undefined;
 }
 
 export function createSession(userId: string) {
@@ -55,24 +56,25 @@ export function deleteSession(sessionId: string) {
 }
 
 // Boards
-export function getBoards(userId: string) {
+export function getBoards(userId: string): Board[] {
     const stmt = db.prepare('SELECT * FROM boards WHERE user_id = ? ORDER BY created_at DESC');
-    return stmt.all(userId);
+    return stmt.all(userId) as Board[];
 }
 
-export function createBoard(userId: string, title: string) {
+export function createBoard(userId: string, title: string): Board {
     const id = randomUUID();
+    const created_at = Math.floor(Date.now() / 1000);
     const stmt = db.prepare('INSERT INTO boards (id, user_id, title) VALUES (?, ?, ?)');
     stmt.run(id, userId, title);
-    return { id, userId, title };
+    return { id, user_id: userId, title, created_at };
 }
 
-export function getBoard(boardId: string) {
+export function getBoard(boardId: string): Board | undefined {
     const stmt = db.prepare('SELECT * FROM boards WHERE id = ?');
-    return stmt.get(boardId);
+    return stmt.get(boardId) as Board | undefined;
 }
 
-export function updateBoard(boardId: string, title: string) {
+export function updateBoard(boardId: string, title: string): Board | undefined {
     const stmt = db.prepare('UPDATE boards SET title = ? WHERE id = ?');
     stmt.run(title, boardId);
     return getBoard(boardId);
@@ -84,24 +86,25 @@ export function deleteBoard(boardId: string) {
 }
 
 // Lists
-export function getLists(boardId: string) {
+export function getLists(boardId: string): List[] {
     const stmt = db.prepare('SELECT * FROM lists WHERE board_id = ? ORDER BY position ASC');
-    return stmt.all(boardId);
+    return stmt.all(boardId) as List[];
 }
 
-export function createList(boardId: string, title: string) {
+export function createList(boardId: string, title: string): List {
     const id = randomUUID();
     // Get max position to append to the end
     const maxPosStmt = db.prepare('SELECT MAX(position) as maxPos FROM lists WHERE board_id = ?');
     const result = maxPosStmt.get(boardId) as { maxPos: number | null };
     const position = (result?.maxPos ?? -1) + 1;
+    const created_at = Math.floor(Date.now() / 1000);
 
     const stmt = db.prepare('INSERT INTO lists (id, board_id, title, position) VALUES (?, ?, ?, ?)');
     stmt.run(id, boardId, title, position);
-    return { id, boardId, title, position };
+    return { id, board_id: boardId, title, position, created_at };
 }
 
-export function updateList(listId: string, updates: { title?: string; position?: number }) {
+export function updateList(listId: string, updates: { title?: string; position?: number }): List | undefined {
     const fields = [];
     const values = [];
     
@@ -122,9 +125,9 @@ export function updateList(listId: string, updates: { title?: string; position?:
     return getList(listId);
 }
 
-export function getList(listId: string) {
+export function getList(listId: string): List | undefined {
     const stmt = db.prepare('SELECT * FROM lists WHERE id = ?');
-    return stmt.get(listId);
+    return stmt.get(listId) as List | undefined;
 }
 
 export function deleteList(listId: string) {
@@ -133,23 +136,24 @@ export function deleteList(listId: string) {
 }
 
 // Cards
-export function getCards(listId: string) {
+export function getCards(listId: string): Card[] {
     const stmt = db.prepare('SELECT * FROM cards WHERE list_id = ? ORDER BY position ASC');
-    return stmt.all(listId);
+    return stmt.all(listId) as Card[];
 }
 
-export function createCard(listId: string, title: string, description: string = '') {
+export function createCard(listId: string, title: string, description: string = ''): Card {
     const id = randomUUID();
     const maxPosStmt = db.prepare('SELECT MAX(position) as maxPos FROM cards WHERE list_id = ?');
     const result = maxPosStmt.get(listId) as { maxPos: number | null };
     const position = (result?.maxPos ?? -1) + 1;
+    const created_at = Math.floor(Date.now() / 1000);
 
     const stmt = db.prepare('INSERT INTO cards (id, list_id, title, description, position) VALUES (?, ?, ?, ?, ?)');
     stmt.run(id, listId, title, description, position);
-    return { id, listId, title, description, position };
+    return { id, list_id: listId, title, description, position, created_at };
 }
 
-export function updateCard(cardId: string, updates: { title?: string; description?: string; position?: number; list_id?: string }) {
+export function updateCard(cardId: string, updates: { title?: string; description?: string; position?: number; list_id?: string }): Card | undefined {
     const fields = [];
     const values = [];
 
@@ -178,9 +182,9 @@ export function updateCard(cardId: string, updates: { title?: string; descriptio
     return getCard(cardId);
 }
 
-export function getCard(cardId: string) {
+export function getCard(cardId: string): Card | undefined {
     const stmt = db.prepare('SELECT * FROM cards WHERE id = ?');
-    return stmt.get(cardId);
+    return stmt.get(cardId) as Card | undefined;
 }
 
 export function deleteCard(cardId: string) {
