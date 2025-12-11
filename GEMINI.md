@@ -17,5 +17,8 @@
 - **Version**: 0.0.1
 
 ## Changelog
-- **2025-12-11**: Initialized SvelteKit project with TypeScript and Tailwind CSS.
+- **2025-12-11**: 
+    - Initialized SvelteKit project with TypeScript and Tailwind CSS.
+    - Initialized Database with Prisma and SQLite.
+    - Defined Database Schema (User, Board, List, Card).
 - **Initial Setup**: Planning and Architecture design.
