@@ -12,6 +12,7 @@ A full-stack Kanban application built with **SvelteKit**, **Bun**, and **SQLite*
 -   **Styling:** TailwindCSS
 
 ## Changelog
+-   **2025-12-11:** Upgraded `drizzle-orm` and `drizzle-kit` to latest versions, and updated `drizzle.config.ts` to use `dialect: 'sqlite'`.
 -   **2025-12-11:** Switched from `bun:sqlite` to `better-sqlite3` for app runtime to resolve Vite SSR compatibility issues.
 -   **2025-12-11:** Restarted project with "Bun Edition" plan to fix `better-sqlite3` build issues.
     -   Defined strict Multi-Agent Workflow.
