@@ -1,18 +1,23 @@
-# KanbanFlow - Project Status
+# Project: Trello Clone (Bun Edition)
+
+## Overview
+A full-stack Kanban application built with **SvelteKit**, **Bun**, and **SQLite**.
 
 ## Tech Stack
-- **Framework**: SvelteKit
-- **Runtime**: Bun
-- **Database**: SQLite (via `bun:sqlite`)
-- **ORM**: Drizzle ORM
-- **Styling**: Tailwind CSS
+-   **Runtime:** Bun
+-   **Framework:** SvelteKit (Vite)
+-   **Database:** SQLite (via `bun:sqlite`)
+-   **ORM:** Drizzle ORM
+-   **Auth:** Lucia Auth
+-   **Styling:** TailwindCSS
 
-## Architecture
-- **Auth**: Custom session-based auth (cookies).
-- **State**: Server-driven with Svelte actions.
-- **UI**: Drag & Drop using `svelte-dnd-action`.
+## Changelog
+-   **2025-12-11:** Restarted project with "Bun Edition" plan to fix `better-sqlite3` build issues.
+    -   Defined strict Multi-Agent Workflow.
+    -   Created Architecture Document `code/.teta/brainstorming/trello_architecture_bun.md`.
+    -   Configured Drizzle to use `bun-sqlite` driver at runtime.
 
-## Current Phase
-- **Brainstorming**: Completed.
-- **Workflow**: Configured for Bun.
-- **Status**: Ready to start Scaffolding.
+## Status
+-   **Phase 1 (Foundation):** Pending
+-   **Phase 2 (Database):** Pending
+-   **Phase 3 (Frontend):** Pending
