@@ -29,6 +29,9 @@
 	"dependencies": {
 		"@prisma/client": "^7.1.0",
 		"bcryptjs": "^3.0.3",
+		"clsx": "^2.1.1",
+		"lucide-svelte": "^0.560.0",
+		"tailwind-merge": "^3.4.0",
 		"zod": "^4.1.13"
 	}
 }

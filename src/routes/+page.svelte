@@ -14,7 +14,9 @@
 			<h1 class="text-3xl font-bold tracking-tight text-gray-900">Trellone</h1>
 			<div>
 				{#if data.user}
-					<span class="mr-4 text-gray-700">Hello, {data.user.name}</span>
+					<a href="/app/boards" class="mr-4 text-sm font-semibold text-gray-900 hover:text-blue-600">
+						Dashboard
+					</a>
 					<form action="/logout" method="POST" class="inline">
 						<button type="submit" class="text-sm font-semibold text-gray-900 hover:text-blue-600">
 							Sign out
@@ -38,19 +40,26 @@
 		<div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
 			{#if data.user}
 				<div class="px-4 py-6 sm:px-0">
-					<div class="rounded-lg border-4 border-dashed border-gray-200 p-10 text-center h-96">
-						<h2 class="text-2xl font-bold text-gray-700">Your Boards</h2>
-						<p class="mt-2 text-gray-500">You don't have any boards yet.</p>
-						<button
-							class="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
-						>
-							Create new board
-						</button>
+					<div class="text-center py-20">
+						<h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+							Welcome back, {data.user.name || 'User'}!
+						</h2>
+						<p class="mt-6 text-lg leading-8 text-gray-600">
+							Ready to get organized?
+						</p>
+						<div class="mt-10 flex items-center justify-center gap-x-6">
+							<a
+								href="/app/boards"
+								class="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+							>
+								Go to Dashboard
+							</a>
+						</div>
 					</div>
 				</div>
 			{:else}
 				<div class="px-4 py-6 sm:px-0">
-					<div class="text-center">
+					<div class="text-center py-20">
 						<h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
 							Organize your work.
 						</h2>
@@ -65,7 +74,7 @@
 								Get started
 							</a>
 							<a href="/login" class="text-sm font-semibold leading-6 text-gray-900">
-								Learn more <span aria-hidden="true">→</span>
+								Log in <span aria-hidden="true">→</span>
 							</a>
 						</div>
 					</div>
