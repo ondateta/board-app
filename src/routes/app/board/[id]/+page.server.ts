@@ -89,6 +89,21 @@ export const actions: Actions = {
       return fail(500, { message: 'Failed to reorder lists' });
     }
   },
+  updateCard: async ({ request }) => {
+    const formData = await request.formData();
+    const cardId = formData.get('cardId') as string;
+    const title = formData.get('title') as string;
+    const description = formData.get('description') as string;
+
+    if (!cardId || !title) return fail(400, { message: 'Missing required fields' });
+
+    try {
+      await cardDAL.update(cardId, { title, description });
+      return { success: true };
+    } catch (e) {
+      return fail(500, { message: 'Failed to update card' });
+    }
+  },
   updateCardOrder: async ({ request }) => {
     const formData = await request.formData();
     const itemsJson = formData.get('items') as string;

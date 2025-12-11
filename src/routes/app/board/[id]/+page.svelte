@@ -2,7 +2,7 @@
   import { flip } from 'svelte/animate';
   import { dndzone, type DndEvent } from 'svelte-dnd-action';
   import { enhance } from '$app/forms';
-  import { Trash2, Plus, X } from 'lucide-svelte';
+  import { Trash2, Plus, X, FileText, AlignLeft, Save } from 'lucide-svelte';
   import Modal from '$lib/components/Modal.svelte';
 
   export let data;
@@ -13,6 +13,20 @@
 
   // Drag and Drop options
   const flipDurationMs = 200;
+
+  // --- Modal State ---
+  let editingCard: any = null;
+  let isCardModalOpen = false;
+
+  function openCardModal(card: any) {
+    editingCard = card;
+    isCardModalOpen = true;
+  }
+
+  function closeCardModal() {
+    isCardModalOpen = false;
+    // We don't clear editingCard immediately to allow transition to finish
+  }
 
   // --- List Reordering ---
   function handleListConsider(e: CustomEvent<DndEvent<any>>) {
@@ -124,16 +138,21 @@
             {#each list.cards as card (card.id)}
               <div 
                 animate:flip={{duration: flipDurationMs}} 
-                class="bg-white p-3 rounded-lg shadow-sm mb-2 group border border-gray-200 hover:border-blue-300 cursor-grab active:cursor-grabbing {(card as any).isDndShadowItem ? 'opacity-50 grayscale' : ''}"
+                class="bg-white p-3 rounded-lg shadow-sm mb-2 group border border-gray-200 hover:border-blue-300 cursor-pointer active:cursor-grabbing {(card as any).isDndShadowItem ? 'opacity-50 grayscale' : ''}"
+                on:click={() => openCardModal(card)}
+                on:keydown={(e) => e.key === 'Enter' && openCardModal(card)}
+                role="button"
+                tabindex="0"
               >
-                <div class="flex justify-between items-start">
-                    <span class="text-sm text-gray-800 break-words">{card.title}</span>
-                    <form action="?/deleteCard" method="POST" use:enhance class="opacity-0 group-hover:opacity-100 transition-opacity">
-                        <input type="hidden" name="cardId" value={card.id} />
-                        <button type="submit" class="text-gray-400 hover:text-red-500">
-                            <X size={14} />
-                        </button>
-                    </form>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-start">
+                        <span class="text-sm text-gray-800 break-words font-medium">{card.title}</span>
+                    </div>
+                    {#if card.description}
+                        <div class="flex items-center gap-1 text-gray-400">
+                            <AlignLeft size={14} />
+                        </div>
+                    {/if}
                 </div>
               </div>
             {/each}
@@ -223,6 +242,89 @@
     </div>
   </div>
 </div>
+
+{#if editingCard}
+    <Modal bind:isOpen={isCardModalOpen} title="Edit Card" onClose={closeCardModal}>
+        <div class="space-y-6">
+            <form 
+                action="?/updateCard" 
+                method="POST" 
+                use:enhance={() => {
+                    return async ({ update }) => {
+                        await update();
+                        isCardModalOpen = false;
+                    };
+                }}
+                class="space-y-4"
+            >
+                <input type="hidden" name="cardId" value={editingCard.id} />
+                
+                <div>
+                    <label for="title" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <FileText size={16} />
+                        Title
+                    </label>
+                    <input 
+                        type="text" 
+                        id="title" 
+                        name="title" 
+                        value={editingCard.title} 
+                        class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                        <AlignLeft size={16} />
+                        Description
+                    </label>
+                    <textarea 
+                        id="description" 
+                        name="description" 
+                        value={editingCard.description || ''} 
+                        rows="5"
+                        class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Add a more detailed description..."
+                    ></textarea>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button 
+                        type="submit" 
+                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center gap-2 font-medium"
+                    >
+                        <Save size={16} />
+                        Save
+                    </button>
+                </div>
+            </form>
+
+            <div class="border-t pt-4">
+                 <h4 class="text-sm font-medium text-gray-700 mb-2">Actions</h4>
+                 <form 
+                    action="?/deleteCard" 
+                    method="POST" 
+                    use:enhance={() => {
+                        return async ({ update }) => {
+                            await update();
+                            isCardModalOpen = false;
+                        };
+                    }}
+                >
+                    <input type="hidden" name="cardId" value={editingCard.id} />
+                    <button 
+                        type="submit" 
+                        class="w-full bg-gray-100 text-red-600 px-4 py-2 rounded-md hover:bg-red-50 hover:text-red-700 flex items-center justify-center gap-2 transition-colors"
+                    >
+                        <Trash2 size={16} />
+                        Delete Card
+                    </button>
+                </form>
+            </div>
+        </div>
+    </Modal>
+{/if}
 
 <style>
   .custom-scrollbar::-webkit-scrollbar {
