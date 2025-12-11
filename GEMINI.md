@@ -6,7 +6,7 @@ A full-stack Kanban application built with **SvelteKit**, **Bun**, and **SQLite*
 ## Tech Stack
 -   **Runtime:** Bun
 -   **Framework:** SvelteKit (Vite)
--   **Database:** SQLite (via `bun:sqlite`)
+-   **Database:** SQLite (via `bun:sqlite` for app, `better-sqlite3` for migrations)
 -   **ORM:** Drizzle ORM
 -   **Auth:** Lucia Auth
 -   **Styling:** TailwindCSS
@@ -19,8 +19,11 @@ A full-stack Kanban application built with **SvelteKit**, **Bun**, and **SQLite*
     -   Successfully installed dependencies using `bun install`.
     -   Added `.gitignore` for standard SvelteKit project.
     -   Created initial directory structure (`src/routes`, `src/lib`, etc.) and base files (`app.html`, `app.css`, `+layout.svelte`).
+    -   Set up database schema with Drizzle and Lucia.
+    -   Installed `better-sqlite3` as dev dependency for `drizzle-kit` compatibility.
+    -   Successfully synchronized database using `bun run db:push`.
 
 ## Status
--   **Phase 1 (Foundation):** In Progress
--   **Phase 2 (Database):** Pending
+-   **Phase 1 (Foundation):** Completed
+-   **Phase 2 (Database):** In Progress
 -   **Phase 3 (Frontend):** Pending
