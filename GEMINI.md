@@ -6,12 +6,13 @@ A full-stack Kanban application built with **SvelteKit**, **Bun**, and **SQLite*
 ## Tech Stack
 -   **Runtime:** Bun
 -   **Framework:** SvelteKit (Vite)
--   **Database:** SQLite (via `bun:sqlite` for app, `better-sqlite3` for migrations)
+-   **Database:** SQLite (via `better-sqlite3` for both app and migrations)
 -   **ORM:** Drizzle ORM
 -   **Auth:** Lucia Auth
 -   **Styling:** TailwindCSS
 
 ## Changelog
+-   **2025-12-11:** Switched from `bun:sqlite` to `better-sqlite3` for app runtime to resolve Vite SSR compatibility issues.
 -   **2025-12-11:** Restarted project with "Bun Edition" plan to fix `better-sqlite3` build issues.
     -   Defined strict Multi-Agent Workflow.
     -   Created Architecture Document `code/.teta/brainstorming/trello_architecture_bun.md`.
