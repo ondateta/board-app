@@ -18,6 +18,7 @@ A full-stack Kanban application built with **SvelteKit**, **Bun**, and **SQLite*
     -   Configured Drizzle to use `bun-sqlite` driver at runtime.
     -   Successfully installed dependencies using `bun install`.
     -   Added `.gitignore` for standard SvelteKit project.
+    -   Created initial directory structure (`src/routes`, `src/lib`, etc.) and base files (`app.html`, `app.css`, `+layout.svelte`).
 
 ## Status
 -   **Phase 1 (Foundation):** In Progress
