@@ -6,16 +6,20 @@
 - **Styling**: Tailwind CSS
 - **Database**: SQLite (via `better-sqlite3`)
 - **Authentication**: Custom session-based (HTTP-only cookies), Scrypt password hashing.
+- **Icons**: Lucide Svelte
 
 ## Architecture
 - **Data Access Layer**: `src/lib/server/db`
     - `index.ts`: Database connection (Singleton)
     - `schema.sql`: Database schema definition
-    - `actions.ts`: Helper functions for DB operations (User, Session management)
+    - `actions.ts`: Helper functions for DB operations (User, Session, Boards, Lists, Cards)
 - **API Routes**: `src/routes/api`
     - `/auth/register`: User registration
     - `/auth/login`: User login
     - `/auth/logout`: User logout
+    - `/boards`, `/lists`, `/cards`: CRUD operations
+- **Frontend Routes**:
+    - `/app`: Dashboard (Layout + Page) - Protected
 - **Hooks**: `src/hooks.server.ts` handles session validation and populates `locals.user`.
 
 ## Database Schema
@@ -29,3 +33,5 @@
 - Initialized project structure.
 - Implemented Database Schema and initialization script.
 - Implemented Authentication (Register, Login, Logout) and Session Management.
+- Implemented CRUD API for Boards, Lists, and Cards.
+- Implemented `/app` Dashboard (View Boards, Create Board) and Layout (Sidebar, Logout).
