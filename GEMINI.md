@@ -14,11 +14,14 @@
   - `bcryptjs`: Password hashing
 
 ## Current Status
-- **Phase**: MVP Development (Core Features)
-- **Version**: 0.0.6
+- **Phase**: MVP Development (Refining & Polish)
+- **Version**: 0.0.7
 
 ## Changelog
 - **2025-12-11**:
+    - **SEO**: Applied SEO meta tags (Description, Keywords, Robots) to all pages.
+    - **SEO**: Created `robots.txt` and `manifest.json` (verified).
+    - **Assets**: Created placeholder `og-home.svg` for Open Graph sharing.
     - **UX**: Refined Board View UX (animations, placeholders, dynamic title, layout fixes).
     - **Feature**: Implemented Drag and Drop for Lists and Cards using `svelte-dnd-action`.
     - **Feature**: Implemented List and Card reordering with persistence to database.
