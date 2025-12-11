@@ -15,10 +15,12 @@
 
 ## Current Status
 - **Phase**: Initialization / Auth Implementation
-- **Version**: 0.0.2
+- **Version**: 0.0.3
 
 ## Changelog
 - **2025-12-11**:
+    - Connected Authentication to UI (Landing page updates).
+    - Added `src/routes/+layout.server.ts` for global user state.
     - Implemented Authentication (Login/Register/Logout).
     - Added `bcryptjs` for password hashing.
     - Added `zod` for validation.
