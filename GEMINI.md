@@ -1,25 +1,18 @@
-# KanbanFlow - Project Documentation
-
-## Project Overview
-KanbanFlow is a Trello-like project management application built with performance and simplicity in mind.
+# KanbanFlow - Project Status
 
 ## Tech Stack
-- **Runtime:** Bun
-- **Framework:** SvelteKit
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS
-- **Database:** SQLite (via Better-SQLite3)
-- **ORM:** Drizzle ORM
-- **Drag & Drop:** svelte-dnd-action
+- **Framework**: SvelteKit
+- **Runtime**: Bun
+- **Database**: SQLite (via `bun:sqlite`)
+- **ORM**: Drizzle ORM
+- **Styling**: Tailwind CSS
 
-## Workflow History
-- **v1.0.0:** Initial Setup (Failed due to interactive commands)
-- **v1.1.0:** Manual Recovery (Failed due to missing config context)
-- **v1.2.0:** Robust Recovery (Failed due to agent errors)
-- **v1.3.0:** Atomic Recovery (Failed due to configuration error - missing agent assignment)
-- **v1.4.0:** Explicit Agent Workflow (Current). Defines specific agents (`scaffolder`, `coder`) for each step to ensure accountability and correct tool usage.
+## Architecture
+- **Auth**: Custom session-based auth (cookies).
+- **State**: Server-driven with Svelte actions.
+- **UI**: Drag & Drop using `svelte-dnd-action`.
 
-## Current Status
-- [ ] Phase 1: Foundation Setup (Config, Structure, Install)
-- [ ] Phase 2: Backend & Database (Schema, Auth)
-- [ ] Phase 3: Frontend Implementation (Auth UI, Board UI)
+## Current Phase
+- **Brainstorming**: Completed.
+- **Workflow**: Configured for Bun.
+- **Status**: Ready to start Scaffolding.
