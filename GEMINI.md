@@ -8,17 +8,21 @@
 - **Database**: SQLite (via Prisma)
 - **Key Libraries**:
   - `prisma`: ORM
-  - `svelte-dnd-action`: Drag and Drop (Planned)
-  - `lucide-svelte`: Icons (Planned)
+  - `svelte-dnd-action`: Drag and Drop
+  - `lucide-svelte`: Icons
   - `zod`: Validation
   - `bcryptjs`: Password hashing
 
 ## Current Status
 - **Phase**: MVP Development (Core Features)
-- **Version**: 0.0.4
+- **Version**: 0.0.5
 
 ## Changelog
 - **2025-12-11**:
+    - **Feature**: Implemented Drag and Drop for Lists and Cards using `svelte-dnd-action`.
+    - **Feature**: Implemented List and Card reordering with persistence to database.
+    - **Backend**: Added `reorder` methods to DAL for batch updates.
+    - **UI**: Finished Board View UI with lists, cards, and drag-and-drop interactions.
     - **Backend**: Implemented Data Access Layer (DAL) for Boards, Lists, and Cards (`src/lib/server/dal.ts`).
     - **Backend**: Implemented Server Actions for CRUD operations.
     - **Feature**: Added User Dashboard (`/app/boards`) to list and create boards.

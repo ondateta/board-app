@@ -74,5 +74,33 @@ export const actions: Actions = {
           return fail(500, { message: 'Failed to delete board' });
       }
       throw redirect(302, '/app/boards');
+  },
+  updateListOrder: async ({ request }) => {
+    const formData = await request.formData();
+    const itemsJson = formData.get('items') as string;
+    
+    if (!itemsJson) return fail(400, { message: 'Missing items' });
+
+    try {
+      const items = JSON.parse(itemsJson);
+      await listDAL.reorder(items);
+      return { success: true };
+    } catch (e) {
+      return fail(500, { message: 'Failed to reorder lists' });
+    }
+  },
+  updateCardOrder: async ({ request }) => {
+    const formData = await request.formData();
+    const itemsJson = formData.get('items') as string;
+    
+    if (!itemsJson) return fail(400, { message: 'Missing items' });
+
+    try {
+      const items = JSON.parse(itemsJson);
+      await cardDAL.reorder(items);
+      return { success: true };
+    } catch (e) {
+      return fail(500, { message: 'Failed to reorder cards' });
+    }
   }
 };

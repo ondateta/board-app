@@ -2,7 +2,7 @@
     import { X } from 'lucide-svelte';
     import { fade, scale } from 'svelte/transition';
 
-    let { isOpen = $bindable(false), title, children, onClose } = $props();
+    let { isOpen = $bindable(false), title, children, onClose = undefined } = $props();
 
     function close() {
         isOpen = false;

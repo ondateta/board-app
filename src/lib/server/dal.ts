@@ -72,6 +72,16 @@ export const listDAL = {
     return prisma.list.delete({
       where: { id: listId }
     });
+  },
+  reorder: async (items: { id: string; order: number }[]) => {
+    return prisma.$transaction(
+      items.map((item) =>
+        prisma.list.update({
+          where: { id: item.id },
+          data: { order: item.order }
+        })
+      )
+    );
   }
 };
 
@@ -101,5 +111,18 @@ export const cardDAL = {
     return prisma.card.delete({
       where: { id: cardId }
     });
+  },
+  reorder: async (items: { id: string; order: number; listId?: string }[]) => {
+    return prisma.$transaction(
+      items.map((item) =>
+        prisma.card.update({
+          where: { id: item.id },
+          data: { 
+            order: item.order,
+            ...(item.listId ? { listId: item.listId } : {})
+           }
+        })
+      )
+    );
   }
 };
