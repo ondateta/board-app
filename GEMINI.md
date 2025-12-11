@@ -2,24 +2,16 @@
 
 ## Overview
 A Kanban-style task management application built with SvelteKit.
-Allows users to create boards, lists, and cards, with drag-and-drop organization.
 
-## Tech Stack
-- **Framework:** SvelteKit (Svelte 5)
-- **Runtime:** Bun
-- **Styling:** Tailwind CSS
-- **Database:** SQLite (via Drizzle ORM)
-- **Drag & Drop:** svelte-dnd-action
-- **Icons:** lucide-svelte
+## Status: RECOVERY MODE
+The initial scaffolding failed. We are now running a manual setup workflow to guarantee file creation.
 
-## Status
-- [x] Brainstorming & Planning
-- [>] Project Initialization (Starting...)
-- [ ] Database Setup
-- [ ] Authentication Implementation
-- [ ] Core Features (Dashboard, Board View)
-- [ ] Drag & Drop Logic
-- [ ] Landing Page & SEO
+## Current Phase
+- [x] Brainstorming & Planning (Recovery Strategy)
+- [ ] Project Setup & Recovery (Manual Config Writing)
+- [ ] Backend & Database Foundation
+- [ ] Frontend Implementation
 
 ## Changelog
-- **2025-12-11:** Workflow design finalized (v1.0.3). Execution triggered.
+- **2025-12-11 v1.1.0:** Detected failure in initial setup. Switched to manual file writing strategy in `agents_workflow.json`.
+- **2025-12-11 v1.0.3:** Initial design (Failed execution).
