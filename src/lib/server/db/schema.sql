@@ -5,6 +5,13 @@ CREATE TABLE IF NOT EXISTS users (
     created_at INTEGER DEFAULT (unixepoch())
 );
 
+CREATE TABLE IF NOT EXISTS sessions (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    expires_at INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS boards (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL,
