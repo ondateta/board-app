@@ -15,10 +15,11 @@
 
 ## Current Status
 - **Phase**: MVP Development (Core Features)
-- **Version**: 0.0.5
+- **Version**: 0.0.6
 
 ## Changelog
 - **2025-12-11**:
+    - **UX**: Refined Board View UX (animations, placeholders, dynamic title, layout fixes).
     - **Feature**: Implemented Drag and Drop for Lists and Cards using `svelte-dnd-action`.
     - **Feature**: Implemented List and Card reordering with persistence to database.
     - **Backend**: Added `reorder` methods to DAL for batch updates.

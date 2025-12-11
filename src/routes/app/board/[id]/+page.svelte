@@ -74,6 +74,10 @@
   let creatingCardInList: string | null = null;
 </script>
 
+<svelte:head>
+  <title>{board.title} - Trellone</title>
+</svelte:head>
+
 <div class="h-full flex flex-col overflow-hidden bg-cover bg-center" style="background-image: url({board.background || ''})">
   <!-- Board Header -->
   <header class="bg-white/90 backdrop-blur-sm border-b px-6 py-3 flex justify-between items-center shadow-sm z-10">
@@ -95,7 +99,10 @@
         class="flex gap-4 h-full items-start"
     >
       {#each board.lists as list (list.id)}
-        <div animate:flip={{duration: flipDurationMs}} class="w-80 flex-shrink-0 bg-gray-100 rounded-xl shadow-md max-h-full flex flex-col">
+        <div 
+            animate:flip={{duration: flipDurationMs}} 
+            class="w-80 flex-shrink-0 bg-gray-100 rounded-xl shadow-md max-h-full flex flex-col {(list as any).isDndShadowItem ? 'opacity-50' : ''}"
+        >
           <!-- List Header -->
           <div class="p-3 font-semibold text-gray-700 flex justify-between items-center cursor-move handle">
             <span>{list.title}</span>
@@ -109,13 +116,16 @@
 
           <!-- Cards Area -->
           <div 
-            class="flex-1 overflow-y-auto px-2 pb-2 custom-scrollbar"
+            class="flex-1 overflow-y-auto px-2 pb-2 custom-scrollbar min-h-[50px]"
             use:dndzone={{items: list.cards, flipDurationMs, type: 'card', dropTargetStyle: {}}}
             on:consider={(e) => handleCardConsider(list.id, e)}
             on:finalize={(e) => handleCardFinalize(list.id, e)}
           >
             {#each list.cards as card (card.id)}
-              <div animate:flip={{duration: flipDurationMs}} class="bg-white p-3 rounded-lg shadow-sm mb-2 group border border-gray-200 hover:border-blue-300 cursor-grab active:cursor-grabbing">
+              <div 
+                animate:flip={{duration: flipDurationMs}} 
+                class="bg-white p-3 rounded-lg shadow-sm mb-2 group border border-gray-200 hover:border-blue-300 cursor-grab active:cursor-grabbing {(card as any).isDndShadowItem ? 'opacity-50 grayscale' : ''}"
+              >
                 <div class="flex justify-between items-start">
                     <span class="text-sm text-gray-800 break-words">{card.title}</span>
                     <form action="?/deleteCard" method="POST" use:enhance class="opacity-0 group-hover:opacity-100 transition-opacity">
