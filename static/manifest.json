@@ -1,0 +1,16 @@
+{
+  "name": "Trellone",
+  "short_name": "Trellone",
+  "description": "A powerful, intuitive project management tool.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563EB",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

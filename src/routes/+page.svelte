@@ -6,6 +6,7 @@
 	<title>Trellone - Organize anything, together.</title>
 	<meta name="description" content="Free Kanban boards to manage your projects and tasks. Simple, fast, and effective." />
 	<meta name="keywords" content="kanban, trello clone, project management, task organizer, productivity, sveltekit" />
+	<meta property="og:image" content="/images/og-home.svg" />
 </svelte:head>
 
 <div class="flex min-h-screen flex-col bg-gray-50">

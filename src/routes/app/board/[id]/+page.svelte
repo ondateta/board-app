@@ -90,6 +90,7 @@
 
 <svelte:head>
   <title>{board.title} - Trellone</title>
+  <meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
 <div class="h-full flex flex-col overflow-hidden bg-cover bg-center" style="background-image: url({board.background || ''})">

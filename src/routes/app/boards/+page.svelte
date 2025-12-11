@@ -16,6 +16,11 @@
   });
 </script>
 
+<svelte:head>
+	<title>Dashboard - Trellone</title>
+	<meta name="robots" content="noindex, nofollow" />
+</svelte:head>
+
 <div class="h-full overflow-y-auto bg-gray-50">
     <div class="container mx-auto px-4 py-8 max-w-5xl">
         <div class="flex items-center justify-between mb-8">
