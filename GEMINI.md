@@ -1,15 +1,25 @@
-# KanbanFlow Project
-## Current Status: Recovery Phase 2 (Starting...)
+# KanbanFlow (Trello Clone)
 
-The initial setup encountered issues. We are now executing **Workflow v1.2.0**, which involves a strict manual file creation process based on the plan in `.teta/brainstorming/brainstorming_trello_clone.md`.
+## Project Status
+**Current Phase:** Manual Recovery (Phase 1.3.0)
+**Status:** Recovering from initial setup failure.
+**Date:** 2025-12-11
 
-### Tech Stack
-- **Framework**: SvelteKit (Svelte 5)
-- **Runtime**: Bun
-- **Database**: SQLite (via Drizzle ORM)
-- **Styling**: Tailwind CSS
-- **Drag & Drop**: svelte-dnd-action
+## Tech Stack
+- **Framework:** SvelteKit (Svelte 5)
+- **Runtime:** Bun
+- **Styling:** Tailwind CSS
+- **Database:** SQLite (via Drizzle ORM)
+- **Drag & Drop:** svelte-dnd-action
 
-### Active Workflow
-- `agents_workflow.json` v1.2.0 is active.
-- Goal: Manually rebuild the project structure file-by-file to ensure validity before moving to feature development.
+## Workflow History
+- **v1.0.0:** Initial Setup (Failed - automated tools issue)
+- **v1.1.0:** Recovery V1 (Failed - file creation issue)
+- **v1.2.0:** Recovery V2 (Failed - agents unable to execute complex steps)
+- **v1.3.0 (Current):** Atomic Recovery. Steps are broken down into single file writes.
+
+## Next Steps
+1. Execute Atomic Recovery Workflow.
+2. Verify file existence.
+3. Install dependencies.
+4. Launch Dev Server.
