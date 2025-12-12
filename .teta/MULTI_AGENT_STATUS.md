@@ -98,7 +98,7 @@
 - Implement Drag and Drop for cards (using a library or custom).
 - Add functionality to create lists and cards.
 
-## Agent: ui_engineer (Current)
+## Agent: ui_engineer
 ### Role: Expert in Flutter UI, Material 3, and Widget composition.
 ### Phase: Implement the Board Screen. It should fetch the Board and its Lists. Use a ListView with scrollDirection: Axis.horizontal for the columns. Each column should have a header (title) and a vertical list of tasks. Add 'Add List' button at the end of the horizontal list.
 
@@ -132,3 +132,29 @@
 - Implement "Add Card" functionality.
 - Implement Drag and Drop reordering for Cards and Lists.
 - Improve UI polish (animations, empty states).
+
+## Agent: interaction_developer (Current)
+### Role: Expert in Flutter gestures and complex interactions like Drag and Drop.
+### Phase: Wrap cards in LongPressDraggable and lists in DragTargets (or use similar logic). Implement logic to handle: 1. Reordering within a list. 2. Moving card to another list. Update the local state and persist changes to the database (update 'position' and 'list_id').
+
+### Actions Taken:
+- Updated `BoardController` with `moveCard` method to handle logic for reordering (same list) and moving (different list).
+- Created `DraggableCard` widget that wraps the card UI in `LongPressDraggable` and `DragTarget` (for insertion).
+- Updated `TaskListWidget` to:
+    - Use `DraggableCard`.
+    - Act as a `DragTarget` itself to handle drops on the empty list area (appending to end).
+
+### Decisions Made:
+- Used `LongPressDraggable` to prevent accidental drags while scrolling.
+- Used a combination of `DragTarget` on the specific cards (for precise insertion) and on the list (for appending).
+- Implemented robust index calculation logic in `BoardController` to handle the "remove then insert" shift.
+
+### File Changes:
+- /home/user/code/lib/features/board/presentation/controllers/board_controller.dart
+- /home/user/code/lib/features/board/presentation/widgets/draggable_card.dart
+- /home/user/code/lib/features/board/presentation/widgets/task_list_widget.dart
+- /home/user/code/.teta/MULTI_AGENT_STATUS.md
+
+### Next Steps:
+- Implement "Add Card" functionality (currently a placeholder).
+- Drag and Drop for Lists (reordering columns).
