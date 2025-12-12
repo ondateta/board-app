@@ -1,0 +1,173 @@
+{
+  "enableAll": true,
+  "agents": {
+    "user_agents": {},
+    "custom_agents": {
+      "flutter_architect": {
+        "description": "Expert in Flutter project structure, dependency management, and routing.",
+        "instructions": "You are responsible for initializing the project, setting up the folder structure, configuring pubspec.yaml with necessary dependencies (riverpod, drift, go_router), and setting up the main entry point and router."
+      },
+      "database_specialist": {
+        "description": "Expert in Local Databases, specifically Drift (SQLite) for Flutter.",
+        "instructions": "You are responsible for creating the data layer. Define Drift tables for Boards, Lists, and Cards. Generate the database code. Create Data Access Objects (DAOs) and Repository implementations to abstract the data source."
+      },
+      "ui_engineer": {
+        "description": "Expert in Flutter UI, Material 3, and Widget composition.",
+        "instructions": "You are responsible for building the visual components. Create the Home Screen (Board list) and the Board Screen (Horizontal columns). Focus on layout and styling. Ensure responsive design."
+      },
+      "interaction_developer": {
+        "description": "Expert in Flutter gestures and complex interactions like Drag and Drop.",
+        "instructions": "You are responsible for implementing the Drag and Drop logic. Make cards movable between lists and reorderable. Update the database 'position' fields accordingly."
+      },
+      "polishing_agent": {
+        "description": "Expert in app refinement, metadata, and final touches.",
+        "instructions": "You are responsible for adding the Card Details screen, ensuring all routes work, adding SEO/metadata tags to index.html (if web), and updating project documentation."
+      }
+    }
+  },
+  "workflow": {
+    "phases": [
+      {
+        "id": "phase_setup",
+        "name": "Project Setup",
+        "description": "Initialize the Flutter project and install dependencies.",
+        "type": "sequential",
+        "steps": [
+          {
+            "id": "init_project",
+            "agents": [
+              "flutter_architect"
+            ],
+            "description": "Initialize Flutter project in /home/user/code. Setup folder structure (lib/core, lib/features). Add dependencies: flutter_riverpod, riverpod_annotation, drift, sqlite3_flutter_libs, path_provider, path, go_router, uuid, google_fonts. Run pub get.",
+            "timeout": 600000,
+            "optional": false,
+            "status": "in_progress"
+          },
+          {
+            "id": "setup_routing",
+            "agents": [
+              "flutter_architect"
+            ],
+            "description": "Configure GoRouter with routes '/' (Home) and '/board/:id'. Create placeholder screens for these routes. Update main.dart to use the router and Riverpod's ProviderScope.",
+            "dependsOn": [
+              "init_project"
+            ],
+            "timeout": 300000,
+            "optional": false,
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": "phase_data",
+        "name": "Data Layer Implementation",
+        "description": "Setup local database and repositories.",
+        "type": "sequential",
+        "steps": [
+          {
+            "id": "create_database",
+            "agents": [
+              "database_specialist"
+            ],
+            "description": "Create Drift tables: Boards (id, title, color), TaskLists (id, board_id, title, position), Cards (id, list_id, title, description, position). Generate the database code (using build_runner if needed, or instructing the user/system to run it - note: agents can run shell commands). Implement a Repository class to handle CRUD operations.",
+            "dependsOn": [
+              "phase_setup"
+            ],
+            "timeout": 900000,
+            "optional": false,
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": "phase_ui_basics",
+        "name": "Basic UI Implementation",
+        "description": "Build the visual structure of the app.",
+        "type": "sequential",
+        "steps": [
+          {
+            "id": "build_home_screen",
+            "agents": [
+              "ui_engineer"
+            ],
+            "description": "Implement the Home Screen. Display a grid/list of Boards fetched from the Repository. Add a FloatingActionButton to create a new Board (simple dialog input). Connect to State Management.",
+            "dependsOn": [
+              "phase_data"
+            ],
+            "timeout": 600000,
+            "optional": false,
+            "status": "pending"
+          },
+          {
+            "id": "build_board_layout",
+            "agents": [
+              "ui_engineer"
+            ],
+            "description": "Implement the Board Screen. It should fetch the Board and its Lists. Use a ListView with scrollDirection: Axis.horizontal for the columns. Each column should have a header (title) and a vertical list of tasks. Add 'Add List' button at the end of the horizontal list.",
+            "dependsOn": [
+              "build_home_screen"
+            ],
+            "timeout": 600000,
+            "optional": false,
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": "phase_interaction",
+        "name": "Drag and Drop Logic",
+        "description": "Implement the core Trello interaction.",
+        "type": "sequential",
+        "steps": [
+          {
+            "id": "implement_dnd",
+            "agents": [
+              "interaction_developer"
+            ],
+            "description": "Wrap cards in LongPressDraggable and lists in DragTargets (or use similar logic). Implement logic to handle: 1. Reordering within a list. 2. Moving card to another list. Update the local state and persist changes to the database (update 'position' and 'list_id').",
+            "dependsOn": [
+              "phase_ui_basics"
+            ],
+            "timeout": 1200000,
+            "optional": false,
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": "phase_polish",
+        "name": "Refinement and Polish",
+        "description": "Add details and finalize.",
+        "type": "sequential",
+        "steps": [
+          {
+            "id": "card_details_and_polish",
+            "agents": [
+              "polishing_agent"
+            ],
+            "description": "Implement Card Details screen (navigated when clicking a card). Allow editing title and description. Add Delete button for Cards and Boards. Ensure UI looks good (padding, colors). Update GEMINI.md.",
+            "dependsOn": [
+              "phase_interaction"
+            ],
+            "timeout": 600000,
+            "optional": false,
+            "status": "pending"
+          }
+        ]
+      }
+    ],
+    "retryPolicy": {
+      "maxRetries": 2,
+      "retryDelay": 5000,
+      "fallbackOnError": true
+    },
+    "parallelism": {
+      "maxConcurrentAgents": 1,
+      "batchSize": 1
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Workflow for building a Trello Clone in Flutter with Riverpod, Drift, and GoRouter."
+  }
+}
