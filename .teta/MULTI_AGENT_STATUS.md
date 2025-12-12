@@ -33,3 +33,34 @@
 - Implement data models (Board, List, Card) using Drift.
 - Create repositories for data access.
 - Implement business logic (Providers) for Boards.
+
+## Agent: database_specialist
+### Role: Expert in Local Databases, specifically Drift (SQLite) for Flutter.
+### Phase: Create Drift tables: Boards (id, title, color), TaskLists (id, board_id, title, position), Cards (id, list_id, title, description, position). Generate the database code. Implement a Repository class.
+
+### Actions Taken:
+- Verified `pubspec.yaml` for drift dependencies (already present).
+- Updated `GEMINI.md` with database schema.
+- Created `lib/core/database/app_database.dart` with `Boards`, `TaskLists`, and `Cards` tables.
+- Ran `flutter pub run build_runner build` to generate database code.
+- Created `lib/core/repositories/database_repository.dart` implementing CRUD operations.
+- Ran `flutter pub run build_runner build` to generate repository provider.
+- Verified code with `flutter analyze`.
+
+### Decisions Made:
+- Used `Drift` for local database as requested.
+- Created a single `AppDatabase` file for simplicity.
+- Implemented `DatabaseRepository` to abstract database access.
+- Used `Riverpod` for dependency injection of the repository.
+
+### File Changes:
+- /home/user/code/.teta/MULTI_AGENT_STATUS.md
+- /home/user/code/GEMINI.md
+- /home/user/code/lib/core/database/app_database.dart
+- /home/user/code/lib/core/database/app_database.g.dart
+- /home/user/code/lib/core/repositories/database_repository.dart
+- /home/user/code/lib/core/repositories/database_repository.g.dart
+
+### Next Steps:
+- Implement business logic (Providers) for Boards, Lists, and Cards (e.g., BoardController).
+- Connect UI to these providers.

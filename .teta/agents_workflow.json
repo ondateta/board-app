@@ -54,7 +54,7 @@
             ],
             "timeout": 300000,
             "optional": false,
-            "status": "in_progress"
+            "status": "completed"
           }
         ]
       },
@@ -75,7 +75,7 @@
             ],
             "timeout": 900000,
             "optional": false,
-            "status": "pending"
+            "status": "in_progress"
           }
         ]
       },

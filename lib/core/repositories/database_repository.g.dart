@@ -1,0 +1,28 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'database_repository.dart';
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$databaseRepositoryHash() =>
+    r'cbfbd140735b0bcac312591be39f49a66af38f0b';
+
+/// See also [databaseRepository].
+@ProviderFor(databaseRepository)
+final databaseRepositoryProvider = Provider<DatabaseRepository>.internal(
+  databaseRepository,
+  name: r'databaseRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$databaseRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef DatabaseRepositoryRef = ProviderRef<DatabaseRepository>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
