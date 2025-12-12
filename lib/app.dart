@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trello_clone/core/router/router.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:trello_clone/core/theme/app_theme.dart';
 
 class TrelloCloneApp extends ConsumerWidget {
   const TrelloCloneApp({super.key});
@@ -12,11 +12,7 @@ class TrelloCloneApp extends ConsumerWidget {
 
     return MaterialApp.router(
       title: 'Trello Clone',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-        textTheme: GoogleFonts.interTextTheme(),
-      ),
+      theme: AppTheme.lightTheme,
       routerConfig: router,
       debugShowCheckedModeBanner: false,
     );
