@@ -30,6 +30,8 @@ abstract class DatabaseRepository {
   Future<bool> updateCard(CardsCompanion card);
   Future<int> deleteCard(int id);
   Future<void> reorderCards(List<Card> cards);
+  Future<Card?> getCard(int id);
+  Stream<Card?> watchCard(int id);
 }
 
 class DatabaseRepositoryImpl implements DatabaseRepository {
@@ -140,6 +142,16 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
             .write(CardsCompanion(position: Value(i)));
       }
     });
+  }
+
+  @override
+  Future<Card?> getCard(int id) {
+    return (_db.select(_db.cards)..where((t) => t.id.equals(id))).getSingleOrNull();
+  }
+
+  @override
+  Stream<Card?> watchCard(int id) {
+    return (_db.select(_db.cards)..where((t) => t.id.equals(id))).watchSingleOrNull();
   }
 }
 

@@ -133,7 +133,7 @@
 - Implement Drag and Drop reordering for Cards and Lists.
 - Improve UI polish (animations, empty states).
 
-## Agent: interaction_developer (Current)
+## Agent: interaction_developer
 ### Role: Expert in Flutter gestures and complex interactions like Drag and Drop.
 ### Phase: Wrap cards in LongPressDraggable and lists in DragTargets (or use similar logic). Implement logic to handle: 1. Reordering within a list. 2. Moving card to another list. Update the local state and persist changes to the database (update 'position' and 'list_id').
 
@@ -158,3 +158,41 @@
 ### Next Steps:
 - Implement "Add Card" functionality (currently a placeholder).
 - Drag and Drop for Lists (reordering columns).
+
+## Agent: polishing_agent (Current)
+### Role: Expert in app refinement, metadata, and final touches.
+### Phase: Implement Card Details screen (navigated when clicking a card). Allow editing title and description. Add Delete button for Cards and Boards. Ensure UI looks good (padding, colors). Update GEMINI.md.
+
+### Actions Taken:
+- Implemented `CardDetailScreen` with inline editing for Title and Description using text fields and focus listeners.
+- Added `createCard`, `updateCard`, `deleteCard`, and `deleteBoard` methods to `BoardController`.
+- Added `getCard` and `watchCard` to `DatabaseRepository`.
+- Updated `TaskListWidget` to implement "Add Card" functionality via dialog.
+- Updated `DraggableCard` to navigate to `CardDetailScreen` on tap.
+- Updated `BoardScreen` to include a Delete Board button in the AppBar.
+- Updated `AppRouter` to include the `/board/:id/card/:cardId` route.
+- Ran `flutter analyze` and fixed unused imports and dead code.
+- Updated `GEMINI.md` with correct status and features.
+- Created `/home/user/app/router.json`.
+
+### Decisions Made:
+- Used `GoRouter` sub-routes for card details to maintain hierarchy (`/board/:id/card/:cardId`).
+- Implemented inline editing in `CardDetailScreen` that saves on blur for a smoother user experience.
+- Added `watchCard` to `DatabaseRepository` to allow real-time updates in the detail screen.
+
+### File Changes:
+- /home/user/code/lib/features/board/presentation/controllers/board_controller.dart
+- /home/user/code/lib/core/repositories/database_repository.dart
+- /home/user/code/lib/features/board/presentation/widgets/task_list_widget.dart
+- /home/user/code/lib/features/board/presentation/widgets/draggable_card.dart
+- /home/user/code/lib/features/board/presentation/screens/card_detail_screen.dart
+- /home/user/code/lib/core/router/app_router.dart
+- /home/user/code/lib/features/board/presentation/screens/board_screen.dart
+- /home/user/code/GEMINI.md
+- /home/user/app/router.json
+- /home/user/code/.teta/MULTI_AGENT_STATUS.md
+
+### Next Steps:
+- Implement Drag and Drop for TaskLists (columns).
+- Add support for archiving cards instead of deleting.
+- Add support for due dates and labels.

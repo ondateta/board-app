@@ -47,6 +47,35 @@ class BoardController extends _$BoardController {
     await repository.deleteTaskList(listId);
   }
 
+  Future<void> createCard(int listId, String title) async {
+    final repository = ref.read(databaseRepositoryProvider);
+    final currentCards = await repository.getCards(listId);
+    
+    final newCard = CardsCompanion(
+      listId: Value(listId),
+      title: Value(title),
+      description: const Value(''),
+      position: Value(currentCards.length),
+    );
+
+    await repository.createCard(newCard);
+  }
+
+  Future<void> updateCard(Card card) async {
+    final repository = ref.read(databaseRepositoryProvider);
+    await repository.updateCard(card.toCompanion(true));
+  }
+
+  Future<void> deleteCard(int cardId) async {
+    final repository = ref.read(databaseRepositoryProvider);
+    await repository.deleteCard(cardId);
+  }
+
+  Future<void> deleteBoard(int boardId) async {
+    final repository = ref.read(databaseRepositoryProvider);
+    await repository.deleteBoard(boardId);
+  }
+
   Future<void> moveCard({
     required int cardId,
     required int oldListId,

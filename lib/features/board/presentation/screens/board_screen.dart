@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../controllers/board_controller.dart';
 import '../widgets/task_list_widget.dart';
 
@@ -24,6 +25,12 @@ class BoardScreen extends ConsumerWidget {
         backgroundColor: boardAsync.valueOrNull != null 
             ? Color(boardAsync.value!.color).withValues(alpha: 0.8) 
             : null,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () => _showDeleteBoardDialog(context, ref, id),
+          ),
+        ],
       ),
       backgroundColor: boardAsync.valueOrNull != null 
           ? Color(boardAsync.value!.color) 
@@ -44,6 +51,30 @@ class BoardScreen extends ConsumerWidget {
         },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text('Error: $err')),
+      ),
+    );
+  }
+
+  void _showDeleteBoardDialog(BuildContext context, WidgetRef ref, int boardId) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Board'),
+        content: const Text('Are you sure you want to delete this board? All lists and cards will be lost.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              ref.read(boardControllerProvider.notifier).deleteBoard(boardId);
+              Navigator.pop(context); // Close dialog
+              context.go('/'); // Navigate home
+            },
+            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
       ),
     );
   }

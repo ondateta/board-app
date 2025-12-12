@@ -15,7 +15,6 @@ class TaskListWidget extends ConsumerWidget {
 
     return DragTarget<Map<String, dynamic>>(
       onWillAcceptWithDetails: (details) {
-        final data = details.data;
         // Accept if moving from another list, or reordering (though card-drop handles reorder mostly)
         // If the list is empty, we definitely want to accept.
         return true;
@@ -80,6 +79,7 @@ class TaskListWidget extends ConsumerWidget {
                         card: card,
                         index: index,
                         listId: taskList.id,
+                        boardId: taskList.boardId,
                       );
                     },
                   ),
@@ -91,7 +91,7 @@ class TaskListWidget extends ConsumerWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: TextButton.icon(
                   onPressed: () {
-                     // TODO: Add card
+                    _showAddCardDialog(context, ref);
                   },
                   icon: const Icon(Icons.add),
                   label: const Text('Add a card'),
@@ -106,6 +106,40 @@ class TaskListWidget extends ConsumerWidget {
           ),
         );
       },
+    );
+  }
+
+  void _showAddCardDialog(BuildContext context, WidgetRef ref) {
+    final controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Add Card'),
+        content: TextField(
+          controller: controller,
+          decoration: const InputDecoration(hintText: 'Card Title'),
+          autofocus: true,
+          textCapitalization: TextCapitalization.sentences,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              if (controller.text.isNotEmpty) {
+                ref.read(boardControllerProvider.notifier).createCard(
+                      taskList.id,
+                      controller.text.trim(),
+                    );
+                Navigator.pop(context);
+              }
+            },
+            child: const Text('Add'),
+          ),
+        ],
+      ),
     );
   }
 

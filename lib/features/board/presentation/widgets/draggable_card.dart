@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/database/app_database.dart' as db;
 import '../controllers/board_controller.dart';
 
@@ -7,12 +8,14 @@ class DraggableCard extends ConsumerWidget {
   final db.Card card;
   final int index;
   final int listId;
+  final int boardId;
 
   const DraggableCard({
     super.key,
     required this.card,
     required this.index,
     required this.listId,
+    required this.boardId,
   });
 
   @override
@@ -63,9 +66,15 @@ class DraggableCard extends ConsumerWidget {
     return Card(
       elevation: 1,
       margin: const EdgeInsets.only(bottom: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Text(card.title),
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
+        onTap: () {
+          context.go('/board/$boardId/card/${card.id}');
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(card.title),
+        ),
       ),
     );
   }
