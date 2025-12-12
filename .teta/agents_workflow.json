@@ -41,7 +41,7 @@
             "description": "Initialize Flutter project in /home/user/code. Setup folder structure (lib/core, lib/features). Add dependencies: flutter_riverpod, riverpod_annotation, drift, sqlite3_flutter_libs, path_provider, path, go_router, uuid, google_fonts. Run pub get.",
             "timeout": 600000,
             "optional": false,
-            "status": "in_progress"
+            "status": "completed"
           },
           {
             "id": "setup_routing",
@@ -54,7 +54,7 @@
             ],
             "timeout": 300000,
             "optional": false,
-            "status": "pending"
+            "status": "in_progress"
           }
         ]
       },
