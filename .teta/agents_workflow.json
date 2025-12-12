@@ -96,7 +96,7 @@
             ],
             "timeout": 600000,
             "optional": false,
-            "status": "in_progress"
+            "status": "completed"
           },
           {
             "id": "build_board_layout",
@@ -109,7 +109,7 @@
             ],
             "timeout": 600000,
             "optional": false,
-            "status": "pending"
+            "status": "in_progress"
           }
         ]
       },
