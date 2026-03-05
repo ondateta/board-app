@@ -1,0 +1,11 @@
+{
+  "enableAllProjectMcpServers": true,
+  "permissions": {
+    "allow": [
+      "mcp__teta-skills__*",
+      "mcp__teta-browser-tools__*",
+      "mcp__teta-image-gen__*",
+      "mcp__context7__*"
+    ]
+  }
+}
