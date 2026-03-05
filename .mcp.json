@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "teta-skills": {
+      "command": "node",
+      "args": [
+        "/home/user/skill-mcp-server.js"
+      ]
+    },
+    "teta-browser-tools": {
+      "command": "node",
+      "args": [
+        "/home/user/browser-tools-mcp-server.js"
+      ]
+    },
+    "teta-image-gen": {
+      "command": "node",
+      "args": [
+        "/home/user/image-gen-mcp-server.js"
+      ]
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    }
+  }
+}
